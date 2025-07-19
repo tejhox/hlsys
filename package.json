@@ -4,7 +4,8 @@
     "type": "module",
     "scripts": {
         "build": "vite build",
-        "dev": "vite"
+        "dev": "vite",
+        "postbuild": "mv public/build/.vite/manifest.json public/build/manifest.json"
     },
     "devDependencies": {
         "@tailwindcss/forms": "^0.5.2",
