@@ -1,0 +1,24 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import '@fortawesome/fontawesome-free/css/all.min.css';
+
+/* Override scroll lock DaisyUI modal */
+:root:has(
+  :is(
+    .modal-open,
+    .modal:target,
+    .modal-toggle:checked + .modal,
+    .modal[open]
+  )
+) {
+  overflow: auto !important;
+  scrollbar-gutter: unset !important;
+}
+
+/* Fallback untuk browser yang belum support :has() */
+html.modal-open {
+  overflow: auto !important;
+  scrollbar-gutter: unset !important;
+}
