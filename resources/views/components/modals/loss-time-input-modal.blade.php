@@ -1,6 +1,7 @@
 <div x-data="{
     showLossTimeDetailModal: false,
     formActive: false,
+    isLoading: false,
     mainId: null,
     lossTimeId: null,
     loss_time: null,
@@ -34,8 +35,7 @@
     },
 
     submitOrUpdateLossTimeDetail() {
-        console.log(this.lossTimeId);
-
+        this.isLoading = true;
         let payload = {
             main_id: this.mainId,
             factor: this.factor,
@@ -69,7 +69,11 @@
             })
             .catch(error => {
                 console.error('Gagal:', error);
+            })
+            .finally(() => {
+                this.isLoading = false;
             });
+
     },
 
     deleteLossTimeDetail(id) {
@@ -167,7 +171,7 @@
                         <div class="flex flex-col w-2/3">
                             <label for="factor" class="text-slate-800 text-sm">Faktor</label>
                             <select id="factor" name="factor" x-model="factor"
-                                class="select select-sm text-sm text-slate-800 bg-white border-slate-400">
+                                class="select select-sm text-xs text-slate-800 bg-white border-slate-400">
                                 <option value="Man">Man</option>
                                 <option value="Method">Method</option>
                                 <option value="Machine">Machine</option>
@@ -207,9 +211,13 @@
                         <i class="fa-solid fa-trash"></i>
                     </button>
                 </div>
-                <button x-show = "formActive" x-cloak type="submit"
-                    class="btn btn-sm
-                    btn-primary">Simpan</button>
+                <button x-show = "formActive" x-cloak type="submit" class="btn btn-sm
+                    btn-primary"
+                    :disabled="isLoading">
+                    <template x-if="isLoading">
+                        <span class="loading loading-spinner loading-xs"></span>
+                    </template>
+                    <span x-text="isLoading ? 'Loading...' : 'Simpan'"></span></button>
             </div>
         </form>
     </div>

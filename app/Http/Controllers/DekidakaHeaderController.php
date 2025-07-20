@@ -17,17 +17,24 @@ class DekidakaHeaderController extends Controller
             'date' => 'required|date',
         ]);
 
+        // Konversi tanggal ke format Y-m-d untuk DB
+        $date = \Carbon\Carbon::createFromFormat('d-m-Y', $request->date)->format('Y-m-d');
+        $validated['date'] = $date;
+
         $validated['user_id'] = auth()->id();
 
         if ($request->has('header_id')) {
             $header = DekidakaHeader::findOrFail($request->header_id);
             $header->update($validated);
-            return redirect()->route('production.index', ['header_id' => $header->id])->with('status', 'header-updated');
+            return redirect()->route('production.index', ['header_id' => $header->id])
+                            ->with('status', 'header-updated');
         } else {
             $header = DekidakaHeader::create($validated);
-            return redirect()->route('production.index', ['header_id' => $header->id])->with('status', 'header-created');
-      }
+            return redirect()->route('production.index', ['header_id' => $header->id])
+                            ->with('status', 'header-created');
+        }
     }
+
 
     public function destroy($id)
     {

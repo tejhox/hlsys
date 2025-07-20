@@ -1,4 +1,5 @@
-<nav x-data="{ open: false }" class="bg-white/60 sm:bg-white border-b border-gray-100 shadow-lg">
+<nav x-data="{ open: false }"
+    class="bg-gradient-to-r from-blue-400 to-blue-800 sm:bg-white border-gray-100 shadow shadow-slate-600">
     <!-- Primary Navigation Menu -->
     <div class="max-w-7xl mx-auto px-2 sm:px-0 lg:px-0">
         <div class="flex justify-between h-14 sm:h-16">
@@ -7,7 +8,7 @@
                 <div class="shrink-0 flex items-center">
                     <a href="{{ route('dashboard.index') }}">
                         <img src="{{ asset('images/dwa_logo.png') }}" alt="Logo"
-                            class="h-8 w-16 sm:h-10 sm:w-auto rounded-lg shadow-md shadow-slate-400">
+                            class="h-8 w-16 sm:h-10 sm:w-auto rounded-lg shadow shadow-slate-600">
                     </a>
                 </div>
 
@@ -84,7 +85,7 @@
                             </a>
                         @else
                             <button @click="open = ! open"
-                                class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 focus:text-gray-500 transition duration-150 ease-in-out">
+                                class="inline-flex items-center justify-center p-2 rounded-md text-gray-300 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 focus:text-gray-500 transition duration-150 ease-in-out">
                                 <svg class="h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
                                     <path :class="{ 'hidden': open, 'inline-flex': !open }" class="inline-flex"
                                         stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -97,7 +98,7 @@
                         @endif
                     @else
                         <button @click="open = ! open"
-                            class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 focus:text-gray-500 transition duration-150 ease-in-out">
+                            class="inline-flex items-center justify-center p-2 rounded-md text-gray-300 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 focus:text-gray-500 transition duration-150 ease-in-out">
                             <svg class="h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
                                 <path :class="{ 'hidden': open, 'inline-flex': !open }" class="inline-flex"
                                     stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -115,7 +116,7 @@
     </div>
 
     <!-- Responsive Navigation Menu -->
-    <div :class="{ 'block': open, 'hidden': !open }" class="hidden sm:hidden">
+    <div :class="{ 'block': open, 'hidden': !open }" class="bg-white hidden sm:hidden">
         <div class="pt-2 pb-3 space-y-1">
             <x-responsive-nav-link :href="route('dashboard.index')" :active="request()->routeIs('dashboard.index')">
                 {{ __('Dashboard') }}

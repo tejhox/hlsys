@@ -1,4 +1,4 @@
-<div class="bg-gradient-to-r from-blue-200 to-blue-700 shadow rounded-lg p-2">
+<div class="bg-gradient-to-r from-blue-300 to-blue-800 shadow rounded-lg p-2">
     <div class="text-xs text-white text-right font-semibold">
         @if (Auth::check())
             {{ Auth::user()->name }}
@@ -19,24 +19,19 @@
             <div class="flex" :class="editMode ? 'hidden' : ''">
                 <div class="w-1/3 space-y-1">
                     @if ($header)
-                        <input value="{{ $header->line->name }}"
-                            class="input input-sm border-slate-400 bg-white text-slate-800 text-xs"
-                            :readonly="!editMode" :disabled="editMode" />
+                        <input value="{{ $header->line->name }}" class="input input-sm text-xs" :readonly="!editMode"
+                            :disabled="editMode" />
 
-                        <input value="{{ $header->product->name }}"
-                            class="input input-sm border-slate-400 bg-white text-slate-800 text-xs"
+                        <input value="{{ $header->product->name }}" class="input input-sm text-xs"
                             :readonly="!editMode" :disabled="editMode" />
                     @else
-                        <select name="line_id" class="select select-sm border-slate-400 bg-white text-slate-800 text-xs"
-                            :disabled="editMode">
+                        <select name="line_id" class="select select-sm text-xs" :disabled="editMode">
                             @foreach ($lines as $line)
                                 <option value="{{ $line->id }}">{{ $line->name }}</option>
                             @endforeach
                         </select>
 
-                        <select name="product_id"
-                            class="select select-sm border-slate-400 bg-white text-slate-800 text-xs"
-                            :disabled="editMode">
+                        <select name="product_id" class="select select-sm text-xs" :disabled="editMode">
                             @foreach ($products as $product)
                                 <option value="{{ $product->id }}">{{ $product->name }}</option>
                             @endforeach
@@ -47,13 +42,10 @@
                     <div class="flex">
                         <div class="w-1/2">
                             @if ($header)
-                                <input value="Shift {{ $header->shift->shift }}"
-                                    class="input input-sm border-slate-400 bg-white text-slate-800 text-xs"
+                                <input value="Shift {{ $header->shift->shift }}" class="input input-sm text-xs"
                                     :readonly="!editMode" :disabled="editMode" />
                             @else
-                                <select name="shift_id"
-                                    class="select select-sm border-slate-400 bg-white text-slate-800 text-xs"
-                                    :disabled="editMode">
+                                <select name="shift_id" class="select select-sm text-xs" :disabled="editMode">
 
                                     @foreach ($shifts as $shift)
                                         <option value="{{ $shift->id }}">Shift {{ $shift->shift }}</option>
@@ -63,13 +55,10 @@
                         </div>
                         <div class="w-1/2 ms-1">
                             @if ($header)
-                                <input value="Group {{ $header->group->group }}"
-                                    class="input input-sm border-slate-400 bg-white text-slate-800 text-xs"
+                                <input value="Group {{ $header->group->group }}" class="input input-sm text-xs"
                                     :readonly="!editMode" :disabled="editMode" />
                             @else
-                                <select name="group_id"
-                                    class="select select-sm border-slate-400 bg-white text-slate-800 text-xs"
-                                    :disabled="editMode">
+                                <select name="group_id" class="select select-sm text-xs" :disabled="editMode">
                                     @foreach ($groups as $group)
                                         <option value="{{ $group->id }}">Group {{ $group->group }}</option>
                                     @endforeach
@@ -83,10 +72,16 @@
                         class="input input-sm border-slate-400 bg-white text-slate-900 text-xs"
                         @if ($header) readonly @endif :disabled="!editMode" /> --}}
 
-                    <input name="date" type="{{ $header ? 'text' : 'date' }}"
+                    <input name="date" type="text" placeholder="Pilih tanggal"
                         value="{{ $header ? \Carbon\Carbon::parse($header->date)->format('d-m-Y') : '' }}"
-                        class="input input-sm border-slate-400 bg-white text-slate-900 text-xs" " @if ($header) readonly @endif
-                        :disabled="editMode" />
+                        class="input input-sm text-xs" x-data x-init="flatpickr($el, { dateFormat: 'd-m-Y' })"
+                        @if ($header) readonly @endif :disabled="editMode" />
+
+
+                    {{-- <input name="date" type="{{ $header ? 'text' : 'date' }}"
+                        value="{{ $header ? \Carbon\Carbon::parse($header->date)->format('d-m-Y') : '' }}"
+                        class="input input-sm text-xs" " @if ($header) readonly @endif
+                        :disabled="editMode" /> --}}
                 </div>
             </div>
 
@@ -94,65 +89,67 @@
 
             <div class="flex" :class="editMode ? '' : 'hidden'">
 
-                 @if ($header)
+                @if ($header)
                     <input type="hidden" name="header_id" value="{{ $header->id }}">
-                    @endif
+                @endif
 
-                    <div class="w-1/3 space-y-1">
-                        <select name="line_id" class="select select-sm border-slate-400 bg-white text-slate-800 text-xs"
-                            @if (!$header) disabled @endif>
-                            @foreach ($lines as $line)
-                                <option value="{{ $line->id }}" @if ($header && $line->id == $header->line_id) selected @endif>
-                                    {{ $line->name }}
-                                </option>
-                            @endforeach
-                        </select>
+                <div class="w-1/3 space-y-1">
+                    <select name="line_id" class="select select-sm text-xs"
+                        @if (!$header) disabled @endif>
+                        @foreach ($lines as $line)
+                            <option value="{{ $line->id }}" @if ($header && $line->id == $header->line_id) selected @endif>
+                                {{ $line->name }}
+                            </option>
+                        @endforeach
+                    </select>
 
-                        <select name="product_id"
-                            class="select select-sm border-slate-400 bg-white text-slate-800 text-xs"
-                            @if (!$header) disabled @endif>
-                            @foreach ($products as $product)
-                                <option value="{{ $product->id }}" @if ($header && $product->id == $header->product_id) selected @endif>
-                                    {{ $product->name }}
-                                </option>
-                            @endforeach
-                        </select>
-                    </div>
-                    <div class="w-2/3 ms-1 space-y-1">
-                        <div class="flex">
-                            <div class="w-1/2">
-                                <select name="shift_id"
-                                    class="select select-sm border-slate-400 bg-white text-slate-800 text-xs"
-                                    @if (!$header) disabled @endif>
-                                    @foreach ($shifts as $shift)
-                                        <option value="{{ $shift->id }}"
-                                            @if ($header && $shift->id == $header->shift_id) selected @endif>
-                                            Shift {{ $shift->shift }}
-                                        </option>
-                                    @endforeach
-                                </select>
-                            </div>
-                            <div class="w-1/2 ms-1">
-                                <select name="group_id"
-                                    class="select select-sm border-slate-400 bg-white text-slate-800 text-xs"
-                                    @if (!$header) disabled @endif>
-                                    @foreach ($groups as $group)
-                                        <option value="{{ $group->id }}"
-                                            @if ($header && $group->id == $header->group_id) selected @endif>
-                                            Group {{ $group->group }}
-                                        </option>
-                                    @endforeach
-                                </select>
-                            </div>
+                    <select name="product_id" class="select select-sm text-xs"
+                        @if (!$header) disabled @endif>
+                        @foreach ($products as $product)
+                            <option value="{{ $product->id }}" @if ($header && $product->id == $header->product_id) selected @endif>
+                                {{ $product->name }}
+                            </option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="w-2/3 ms-1 space-y-1">
+                    <div class="flex">
+                        <div class="w-1/2">
+                            <select name="shift_id" class="select select-sm text-xs"
+                                @if (!$header) disabled @endif>
+                                @foreach ($shifts as $shift)
+                                    <option value="{{ $shift->id }}"
+                                        @if ($header && $shift->id == $header->shift_id) selected @endif>
+                                        Shift {{ $shift->shift }}
+                                    </option>
+                                @endforeach
+                            </select>
                         </div>
-                        {{-- <input name="date" type="text" x-data x-flatpickr="{dateFormat: 'd-m-Y'}"
-                        placeholder="Pilih tanggal"
+                        <div class="w-1/2 ms-1">
+                            <select name="group_id" class="select select-sm text-xs"
+                                @if (!$header) disabled @endif>
+                                @foreach ($groups as $group)
+                                    <option value="{{ $group->id }}"
+                                        @if ($header && $group->id == $header->group_id) selected @endif>
+                                        Group {{ $group->group }}
+                                    </option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+                    {{-- <input name="date" type="text" placeholder="Pilih tanggal"
                         value="{{ $header ? \Carbon\Carbon::parse($header->date)->format('d-m-Y') : '' }}"
-                        class="input input-sm border-slate-400 bg-white text-slate-900 text-xs"
-                        style="color-scheme: light;" @if ($header) readonly @endif /> --}}
+                        class="input input-sm text-xs" x-data x-init="flatpickr($el, { dateFormat: 'd-m-Y' })"
+                        @if ($header) readonly @endif :disabled="editMode" /> --}}
 
-                        <input name="date" type="date" value="{{ $header ? $header->date : '' }}"
-                            class="input input-sm border-slate-400 bg-white text-slate-900 text-xs" " @if (!$header) disabled @endif />
+                    <input name="date" type="text" placeholder="Pilih tanggal"
+                        value="{{ $header ? \Carbon\Carbon::parse($header->date)->format('d-m-Y') : '' }}"
+                        class="input input-sm text-xs" x-data x-init="flatpickr($el, { dateFormat: 'd-m-Y' })"
+                        @if (!$header) disabled @endif />
+
+
+                    {{-- <input name="date" type="date" value="{{ $header ? $header->date : '' }}"
+                        class="input input-sm text-xs" " @if (!$header) disabled @endif /> --}}
                 </div>
             </div>
 
@@ -162,8 +159,8 @@
             <div class="flex justify-between items-center">
 
                 @error('date')
-    <span class="text-red-600 text-xs">{{ $message }}</span>
-@enderror
+                    <span class="text-red-600 text-xs">{{ $message }}</span>
+                @enderror
 
                 <div class="flex items-center justify-between w-full p-1 rounded-md bg-white/80">
                     <div>
@@ -187,7 +184,7 @@
                     </button>
                     <div x-show='editMode'>
                         <button type="submit" class="btn btn-xs btn-success w-20 shadow-md rounded-md text-sm">
-                            <i class="fa-solid fa-pencil"></i>
+                            <i class="fa-solid fa-check"></i>
                         </button>
                     </div>
                 </div>

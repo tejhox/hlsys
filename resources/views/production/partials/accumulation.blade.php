@@ -1,8 +1,8 @@
 <div class="bg-white shadow rounded-lg p-2 mt-1">
     <div class="flex justify-between items-center">
-        <p class="text-slate-700 text-xs font-semibold">Akumulasi</p>
+        <p class="text-sm font-semibold">Akumulasi</p>
         @if ($header && $header->efficiencyKpi)
-            <a href="{{ route('kpi.index', ['header_id' => $header->id]) }}" class="btn btn-xs btn-outline btn-accent">KPI
+            <a href="{{ route('kpi.index', ['header_id' => $header->id]) }}" class="btn btn-xs btn-primary">KPI
                 <i class="fa-solid fa-chart-line"></i></a>
         @endif
         {{-- <div class="max-w-48">

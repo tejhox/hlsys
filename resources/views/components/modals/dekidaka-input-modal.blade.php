@@ -1,6 +1,7 @@
 <div x-data="{
     showInputModal: false,
     btnStatus: true,
+    isLoading: false,
     error: false,
     headerId: null,
     mainId: null,
@@ -47,6 +48,7 @@
     },
 
     submitAndOpenModal() {
+        this.isLoading = true;
         fetch('{{ route('dekidaka-main.store') }}', {
                 method: 'POST',
                 headers: {
@@ -82,12 +84,17 @@
             })
             .catch(error => {
                 console.error('Gagal menyimpan Main:', error);
+            })
+            .finally(() => {
+                this.isLoading = false;
             });
     },
 
     reloadPage() {
-        location.reload()
+        this.isLoading = true;
+        location.reload();
     }
+
 
 
 }" x-init="hour = shift === '1' ? '08.00 - 09.00' : '20.00 - 21.00'" x-show="showInputModal" x-cloak
@@ -109,11 +116,10 @@
             <div class="space-y-1">
                 <div class="flex justify-between items-center">
                     <div>
-                        <p class="text-slate-800 font-semibold">Tambah Data</p>
+                        <p class="font-semibold">Tambah Data</p>
                     </div>
                     <template x-if="shift === '1'">
-                        <select name="hour" x-model="hour"
-                            class="select select-sm bg-white border-slate-300 text-slate-800 w-32 text-xs">
+                        <select name="hour" x-model="hour" class="select select-sm w-32 text-xs">
                             <option value="08.00 - 09.00">08.00 - 09.00</option>
                             <option value="09.00 - 10.00">09.00 - 10.00</option>
                             <option value="10.00 - 11.00">10.00 - 11.00</option>
@@ -129,8 +135,7 @@
                         </select>
                     </template>
                     <template x-if="shift === '2'">
-                        <select name="hour" x-model="hour"
-                            class="select select-sm bg-white border-slate-300 text-slate-800 w-32 text-xs">
+                        <select name="hour" x-model="hour" class="select select-sm w-32 text-xs">
                             <option value="20.00 - 21.00">20.00 - 21.00</option>
                             <option value="21.00 - 22.00">21.00 - 22.00</option>
                             <option value="22.00 - 23.00">22.00 - 23.00</option>
@@ -149,41 +154,51 @@
                 <div class="flex flex-col">
                     <label for="plan" class="text-slate-800 text-sm">Plan</label>
                     <input type="number" id="plan" name="plan" max="55" x-model="plan"
-                        class="input input-sm bg-white border-slate-300 text-slate-800 w-full" required />
+                        class="input input-sm w-full" required />
                 </div>
 
                 <div class="flex flex-col">
                     <label for="actual" class="text-slate-800 text-sm">Aktual</label>
                     <input type="number" id="actual" name="actual" max="55" x-model="actual"
-                        class="input input-sm bg-white border-slate-300 text-slate-800 w-full" required />
+                        class="input input-sm w-full" required />
                 </div>
 
                 <div class="flex flex-col">
                     <label for="deviation" class="text-slate-800 text-sm">Deviasi</label>
                     <input type="number" id="deviation" name="deviation" :value="deviation"
-                        class="input input-sm bg-white border-slate-300 text-slate-800 w-full" readonly />
+                        class="input input-sm w-full" readonly />
                 </div>
 
                 <div class="flex flex-col">
                     <label for="loss_time" class="text-slate-800 text-sm">Loss Time</label>
-                    <input type="number" id="loss_time" name="loss_time" :value="loss_time"
-                        class="input input-sm bg-white border-slate-300 text-slate-800" readonly />
+                    <input type="number" id="loss_time" name="loss_time" :value="loss_time" class="input input-sm"
+                        readonly />
                 </div>
             </div>
 
             <hr class="my-2 border-slate-300" />
             <div :class="btnStatus ? 'flex justify-between' : 'flex justify-end'">
-                <button type="button" @click="reloadPage()" class="btn btn-sm text-white"
-                    :class="loss_time > 0 ? 'btn-accent' : 'btn-warning'" x-text="loss_time > 0 ? 'OK' : 'Batal'">
+                <button type="button" @click="reloadPage()" :disabled="isLoading"
+                    class="btn btn-sm text-white flex items-center gap-1"
+                    :class="loss_time > 0 ? 'btn-accent' : 'btn-warning'">
+                    <template x-if="isLoading">
+                        <span class="loading loading-spinner loading-xs"></span>
+                    </template>
+                    <span x-text="isLoading ? '' : (loss_time > 0 ? 'OK' : 'Batal')"></span>
                 </button>
+
                 <button x-show="loss_time === 0" type="submit" class="btn btn-sm btn-primary">
                     Simpan
                 </button>
                 <button x-show="loss_time > 0 && btnStatus" x-cloak type="button" @click="submitAndOpenModal"
-                    class="btn btn-sm btn-outline btn-secondary">
-                    Isi Ket. Loss Time
-                    <i class="fa-solid fa-arrow-right"></i>
+                    :disabled="isLoading" class="btn btn-sm btn-outline btn-secondary flex items-center gap-1">
+                    <template x-if="isLoading">
+                        <span class="loading loading-spinner loading-xs"></span>
+                    </template>
+                    <span x-text="isLoading ? 'Loading...' : 'Isi Ket. Loss Time'"></span>
+                    <i class="fa-solid fa-arrow-right" x-show="!isLoading"></i>
                 </button>
+
         </form>
     </div>
 </div>

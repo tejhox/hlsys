@@ -116,7 +116,7 @@
                     cycle_time: {{ $header->product->cycle_time }}
                 }
             }))"
-                class="btn btn-sm bg-blue-700 border-white w-full mt-1 text-lg">
+                class="btn btn-sm bg-blue-700 text-white border-white w-full mt-1 text-lg">
                 <i class="fa-solid fa-plus"></i>
             </button>
         @endif
