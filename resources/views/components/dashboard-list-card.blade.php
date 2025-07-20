@@ -3,11 +3,11 @@
 }"
     class="sm:min-h-72 rounded-lg shadow-md bg-gradient-to-r from-blue-200 to-blue-600/80 sm:bg-none sm:bg-gray-100 p-1.5 sm:border">
 
-    <h1 class="text-white text-center" style="font-weight: 1000;">PRODUCTION CONTROL LIST</h1>
+    <h1 class="text-white text-center text-lg font-bold">PRODUCTION CONTROL LIST</h1>
     <hr class="mb-2 mt-1" />
     <div class="flex justify-end mb-2">
         <a href="{{ route('production.index') }}"
-            class="btn btn-sm sm:btn-md bg-teal-600/70 hover:bg-teal-500 border-0 text-white">Buat
+            class="btn btn-sm sm:btn-md bg-teal-500/70 hover:bg-teal-500 border-0 text-white">Buat
             Laporan <i class="fa-solid fa-plus"></i></a>
     </div>
     <div
@@ -17,7 +17,7 @@
             window.dispatchEvent(new CustomEvent('btn-selected', { detail: btnSelected }));
             "
             :class="btnSelected === 'ER 01' ?
-                'flex-1 py-1 px-1 cursor-pointer text-white rounded-lg bg-gray-300/60' :
+                'flex-1 py-1 px-1 cursor-pointer text-white rounded-lg bg-gray-300/60 shadow' :
                 'flex-1 py-1 px-1 cursor-pointer hover:bg-gray-100/60 text-white rounded-lg'">
             <p class="text-center font-semibold text-md">ER 01</p>
         </div>
@@ -26,7 +26,7 @@
             window.dispatchEvent(new CustomEvent('btn-selected', { detail: btnSelected }));
             "
             :class="btnSelected === 'ER 02' ?
-                'flex-1 py-1 px-1 cursor-pointer text-white rounded-lg bg-gray-300/60' :
+                'flex-1 py-1 px-1 cursor-pointer text-white rounded-lg bg-gray-300/60 shadow' :
                 'flex-1 py-1 px-1 cursor-pointer hover:bg-gray-100/60 text-white rounded-lg'">
             <p class="text-center font-semibold text-md">ER 02</p>
         </div>
@@ -35,7 +35,7 @@
             window.dispatchEvent(new CustomEvent('btn-selected', { detail: btnSelected }));
             "
             :class="btnSelected === 'ER 03' ?
-                'flex-1 py-1 px-1 cursor-pointer text-white rounded-lg bg-gray-300/60' :
+                'flex-1 py-1 px-1 cursor-pointer text-white rounded-lg bg-gray-300/60 shadow' :
                 'flex-1 py-1 px-1 cursor-pointer hover:bg-gray-100/60 text-white rounded-lg'">
             <p class="text-center font-semibold text-md">ER 03</p>
         </div>
@@ -44,7 +44,7 @@
             window.dispatchEvent(new CustomEvent('btn-selected', { detail: btnSelected }));
             "
             :class="btnSelected === 'ER 150' ?
-                'flex-1 py-1 px-1 cursor-pointer text-white rounded-lg bg-gray-300/60' :
+                'flex-1 py-1 px-1 cursor-pointer text-white rounded-lg bg-gray-300/60 shadow' :
                 'flex-1 py-1 px-1 cursor-pointer hover:bg-gray-100/60 text-white rounded-lg'">
             <p class="text-center font-semibold text-md">ER 150</p>
         </div>

@@ -24,8 +24,9 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 
-<body class="font-sans antialiased min-h-screen bg-center bg-fixed bg-cover"
-    style="background-image: url('{{ asset('images/bg5.jpg') }}')">
+<body class="font-sans antialiased min-h-screen bg-white bg-center bg-fixed bg-cover"
+    style="background-color: #f3f4f6; background-image: url('{{ asset('images/bg5.jpg') }}')">
+
     <div class="min-h-screen ">
         @include('layouts.navigation')
 

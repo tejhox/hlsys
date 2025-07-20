@@ -154,7 +154,7 @@
                     <span class="text-red-600 text-xs">{{ $message }}</span>
                 @enderror
 
-                <div class="flex items-center justify-between w-full p-1 rounded-md bg-gray-100/60">
+                <div class="flex items-center justify-between w-full p-1 rounded-md bg-white/80">
                     <div>
                         <button type="button"
                             @click="$dispatch('open-delete-modal', { deleteUrl: '{{ $header ? route('dekidaka-header.destroy', $header->id) : '' }}' })"
@@ -170,13 +170,12 @@
                             <i class="fa-solid fa-pencil"></i>
                         </button>
                     </div>
-                    <button type="submit" class="btn btn-xs btn-outline btn-success w-20 shadow-md rounded-md text-sm"
-                        @if ($header) disabled @endif>
+                    <button type="submit"
+                        class="{{ $header ? 'hidden' : 'btn btn-xs btn-info w-20 shadow-md rounded-md text-sm ' }}">
                         <i class="fa-solid fa-check"></i>
                     </button>
                     <div x-show='editMode'>
-                        <button type="submit"
-                            class="btn btn-xs btn-outline btn-success w-20 shadow-md rounded-md text-sm">
+                        <button type="submit" class="btn btn-xs btn-success w-20 shadow-md rounded-md text-sm">
                             <i class="fa-solid fa-pencil"></i>
                         </button>
                     </div>

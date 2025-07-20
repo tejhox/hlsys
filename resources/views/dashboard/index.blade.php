@@ -7,12 +7,7 @@
             <!-- Mobile -->
             <div class="sm:hidden space-y-1">
                 <x-dashboard-list-card>
-                    <div x-show="btnSelected === 'ER 01'" x-transition:enter="transition ease-out duration-300"
-                        x-transition:enter-start="opacity-0 transform scale-95"
-                        x-transition:enter-end="opacity-100 transform scale-100"
-                        x-transition:leave="transition ease-in duration-200"
-                        x-transition:leave-start="opacity-100 transform scale-100"
-                        x-transition:leave-end="opacity-0 transform scale-95">
+                    <div x-show="btnSelected === 'ER 01'" x-cloak>
                         @include('dashboard.partials.list', [
                             'headers' => $line1group1,
                             'color' => 'bg-gray-700/60',
@@ -34,12 +29,7 @@
                         ])
                     </div>
 
-                    <div x-show="btnSelected === 'ER 02'" x-transition:enter="transition ease-out duration-300"
-                        x-transition:enter-start="opacity-0 transform scale-95"
-                        x-transition:enter-end="opacity-100 transform scale-100"
-                        x-transition:leave="transition ease-in duration-200"
-                        x-transition:leave-start="opacity-100 transform scale-100"
-                        x-transition:leave-end="opacity-0 transform scale-95">
+                    <div x-show="btnSelected === 'ER 02'" x-cloak>
                         @include('dashboard.partials.list', [
                             'headers' => $line2group1,
                             'color' => 'bg-gray-700/60',
@@ -61,12 +51,7 @@
                         ])
                     </div>
 
-                    <div x-show="btnSelected === 'ER 03'" x-transition:enter="transition ease-out duration-300"
-                        x-transition:enter-start="opacity-0 transform scale-95"
-                        x-transition:enter-end="opacity-100 transform scale-100"
-                        x-transition:leave="transition ease-in duration-200"
-                        x-transition:leave-start="opacity-100 transform scale-100"
-                        x-transition:leave-end="opacity-0 transform scale-95">
+                    <div x-show="btnSelected === 'ER 03'" x-cloak>
                         @include('dashboard.partials.list', [
                             'headers' => $line3group1,
                             'color' => 'bg-gray-700/60',
@@ -88,12 +73,7 @@
                         ])
                     </div>
 
-                    <div x-show="btnSelected === 'ER 150'" x-transition:enter="transition ease-out duration-300"
-                        x-transition:enter-start="opacity-0 transform scale-95"
-                        x-transition:enter-end="opacity-100 transform scale-100"
-                        x-transition:leave="transition ease-in duration-200"
-                        x-transition:leave-start="opacity-100 transform scale-100"
-                        x-transition:leave-end="opacity-0 transform scale-95">
+                    <div x-show="btnSelected === 'ER 150'" x-cloak>
                         @include('dashboard.partials.list', [
                             'headers' => $line4group1,
                             'color' => 'bg-gray-700/60',
