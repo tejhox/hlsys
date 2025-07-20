@@ -1,7 +1,6 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
 @import '@fortawesome/fontawesome-free/css/all.min.css';
 
 /* Override scroll lock DaisyUI modal */
@@ -21,4 +20,10 @@
 html.modal-open {
   overflow: auto !important;
   scrollbar-gutter: unset !important;
+}
+
+html, body {
+    color-scheme: only light;
+    background-color: #ffffff;
+    color: #000000;
 }

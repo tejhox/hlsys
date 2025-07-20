@@ -7,7 +7,7 @@
     <hr class="mb-2 mt-1" />
     <div class="flex justify-end mb-2">
         <a href="{{ route('production.index') }}"
-            class="btn btn-sm sm:btn-md bg-teal-500/70 hover:bg-teal-500 border-0 text-white">Buat
+            class="btn btn-sm btn-info shadow shadow-slate-500 text-white font-bold sm:btn-md">Buat
             Laporan <i class="fa-solid fa-plus"></i></a>
     </div>
     <div

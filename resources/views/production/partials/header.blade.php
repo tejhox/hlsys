@@ -77,10 +77,15 @@
                             @endif
                         </div>
                     </div>
-                    <input name="date" type="{{ $header ? 'text' : 'date' }}"
+                    {{-- <input name="date" type="text" x-data x-flatpickr="{dateFormat: 'd-m-Y'}"
+                        placeholder="Pilih tanggal"
                         value="{{ $header ? \Carbon\Carbon::parse($header->date)->format('d-m-Y') : '' }}"
                         class="input input-sm border-slate-400 bg-white text-slate-900 text-xs"
-                        style="color-scheme: light;" @if ($header) readonly @endif
+                        @if ($header) readonly @endif :disabled="!editMode" /> --}}
+
+                    <input name="date" type="{{ $header ? 'text' : 'date' }}"
+                        value="{{ $header ? \Carbon\Carbon::parse($header->date)->format('d-m-Y') : '' }}"
+                        class="input input-sm border-slate-400 bg-white text-slate-900 text-xs" " @if ($header) readonly @endif
                         :disabled="editMode" />
                 </div>
             </div>
@@ -89,59 +94,65 @@
 
             <div class="flex" :class="editMode ? '' : 'hidden'">
 
-                @if ($header)
+                 @if ($header)
                     <input type="hidden" name="header_id" value="{{ $header->id }}">
-                @endif
+                    @endif
 
-                <div class="w-1/3 space-y-1">
-                    <select name="line_id" class="select select-sm border-slate-400 bg-white text-slate-800 text-xs"
-                        @if (!$header) disabled @endif>
-                        @foreach ($lines as $line)
-                            <option value="{{ $line->id }}" @if ($header && $line->id == $header->line_id) selected @endif>
-                                {{ $line->name }}
-                            </option>
-                        @endforeach
-                    </select>
+                    <div class="w-1/3 space-y-1">
+                        <select name="line_id" class="select select-sm border-slate-400 bg-white text-slate-800 text-xs"
+                            @if (!$header) disabled @endif>
+                            @foreach ($lines as $line)
+                                <option value="{{ $line->id }}" @if ($header && $line->id == $header->line_id) selected @endif>
+                                    {{ $line->name }}
+                                </option>
+                            @endforeach
+                        </select>
 
-                    <select name="product_id" class="select select-sm border-slate-400 bg-white text-slate-800 text-xs"
-                        @if (!$header) disabled @endif>
-                        @foreach ($products as $product)
-                            <option value="{{ $product->id }}" @if ($header && $product->id == $header->product_id) selected @endif>
-                                {{ $product->name }}
-                            </option>
-                        @endforeach
-                    </select>
-                </div>
-                <div class="w-2/3 ms-1 space-y-1">
-                    <div class="flex">
-                        <div class="w-1/2">
-                            <select name="shift_id"
-                                class="select select-sm border-slate-400 bg-white text-slate-800 text-xs"
-                                @if (!$header) disabled @endif>
-                                @foreach ($shifts as $shift)
-                                    <option value="{{ $shift->id }}"
-                                        @if ($header && $shift->id == $header->shift_id) selected @endif>
-                                        Shift {{ $shift->shift }}
-                                    </option>
-                                @endforeach
-                            </select>
-                        </div>
-                        <div class="w-1/2 ms-1">
-                            <select name="group_id"
-                                class="select select-sm border-slate-400 bg-white text-slate-800 text-xs"
-                                @if (!$header) disabled @endif>
-                                @foreach ($groups as $group)
-                                    <option value="{{ $group->id }}"
-                                        @if ($header && $group->id == $header->group_id) selected @endif>
-                                        Group {{ $group->group }}
-                                    </option>
-                                @endforeach
-                            </select>
-                        </div>
+                        <select name="product_id"
+                            class="select select-sm border-slate-400 bg-white text-slate-800 text-xs"
+                            @if (!$header) disabled @endif>
+                            @foreach ($products as $product)
+                                <option value="{{ $product->id }}" @if ($header && $product->id == $header->product_id) selected @endif>
+                                    {{ $product->name }}
+                                </option>
+                            @endforeach
+                        </select>
                     </div>
-                    <input name="date" type="date" value="{{ $header ? $header->date : '' }}"
+                    <div class="w-2/3 ms-1 space-y-1">
+                        <div class="flex">
+                            <div class="w-1/2">
+                                <select name="shift_id"
+                                    class="select select-sm border-slate-400 bg-white text-slate-800 text-xs"
+                                    @if (!$header) disabled @endif>
+                                    @foreach ($shifts as $shift)
+                                        <option value="{{ $shift->id }}"
+                                            @if ($header && $shift->id == $header->shift_id) selected @endif>
+                                            Shift {{ $shift->shift }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="w-1/2 ms-1">
+                                <select name="group_id"
+                                    class="select select-sm border-slate-400 bg-white text-slate-800 text-xs"
+                                    @if (!$header) disabled @endif>
+                                    @foreach ($groups as $group)
+                                        <option value="{{ $group->id }}"
+                                            @if ($header && $group->id == $header->group_id) selected @endif>
+                                            Group {{ $group->group }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                        {{-- <input name="date" type="text" x-data x-flatpickr="{dateFormat: 'd-m-Y'}"
+                        placeholder="Pilih tanggal"
+                        value="{{ $header ? \Carbon\Carbon::parse($header->date)->format('d-m-Y') : '' }}"
                         class="input input-sm border-slate-400 bg-white text-slate-900 text-xs"
-                        style="color-scheme: light;" @if (!$header) disabled @endif />
+                        style="color-scheme: light;" @if ($header) readonly @endif /> --}}
+
+                        <input name="date" type="date" value="{{ $header ? $header->date : '' }}"
+                            class="input input-sm border-slate-400 bg-white text-slate-900 text-xs" " @if (!$header) disabled @endif />
                 </div>
             </div>
 
@@ -151,8 +162,8 @@
             <div class="flex justify-between items-center">
 
                 @error('date')
-                    <span class="text-red-600 text-xs">{{ $message }}</span>
-                @enderror
+    <span class="text-red-600 text-xs">{{ $message }}</span>
+@enderror
 
                 <div class="flex items-center justify-between w-full p-1 rounded-md bg-white/80">
                     <div>
