@@ -30,7 +30,7 @@
                         <td class="border font-semibold text-orange-600">
                             {{ $header->dekidakaAccumulation->total_deviation }}</td>
                         <td class="border font-semibold text-red-600">
-                            {{ $header->dekidakaAccumulation->total_loss_time }}'</td>
+                            {{ $header->dekidakaAccumulation->total_loss_time }}' + 10'</td>
                     </tr>
                 @endif
             </tbody>

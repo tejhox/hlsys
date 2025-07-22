@@ -66,29 +66,18 @@
                             @endif
                         </div>
                     </div>
-                    {{-- <input name="date" type="text" x-data x-flatpickr="{dateFormat: 'd-m-Y'}"
-                        placeholder="Pilih tanggal"
-                        value="{{ $header ? \Carbon\Carbon::parse($header->date)->format('d-m-Y') : '' }}"
-                        class="input input-sm border-slate-400 bg-white text-slate-900 text-xs"
-                        @if ($header) readonly @endif :disabled="!editMode" /> --}}
-
-                    <input name="date" type="text" placeholder="Pilih tanggal"
-                        value="{{ $header ? \Carbon\Carbon::parse($header->date)->format('d-m-Y') : '' }}"
-                        class="input input-sm text-xs" x-data x-init="flatpickr($el, { dateFormat: 'd-m-Y' })"
-                        @if ($header) readonly @endif :disabled="editMode" />
-
-
-                    {{-- <input name="date" type="{{ $header ? 'text' : 'date' }}"
-                        value="{{ $header ? \Carbon\Carbon::parse($header->date)->format('d-m-Y') : '' }}"
-                        class="input input-sm text-xs" " @if ($header) readonly @endif
-                        :disabled="editMode" /> --}}
+                    <input name="date" type="text" placeholder="Pilih Tanggal"
+                        x-flatpickr="{
+                            dateFormat: 'd-m-Y',
+                            defaultDate: '{{ $header && $header->date ? \Carbon\Carbon::parse($header->date)->format('d-m-Y') : null }}'
+                        }"
+                        class="input input-sm text-xs" :disabled="!editMode" />
                 </div>
             </div>
 
             <!-- editMode Aktif -->
 
             <div class="flex" :class="editMode ? '' : 'hidden'">
-
                 @if ($header)
                     <input type="hidden" name="header_id" value="{{ $header->id }}">
                 @endif
@@ -137,25 +126,19 @@
                             </select>
                         </div>
                     </div>
-                    {{-- <input name="date" type="text" placeholder="Pilih tanggal"
-                        value="{{ $header ? \Carbon\Carbon::parse($header->date)->format('d-m-Y') : '' }}"
-                        class="input input-sm text-xs" x-data x-init="flatpickr($el, { dateFormat: 'd-m-Y' })"
-                        @if ($header) readonly @endif :disabled="editMode" /> --}}
-
-                    <input name="date" type="text" placeholder="Pilih tanggal"
-                        value="{{ $header ? \Carbon\Carbon::parse($header->date)->format('d-m-Y') : '' }}"
-                        class="input input-sm text-xs" x-data x-init="flatpickr($el, { dateFormat: 'd-m-Y' })"
-                        @if (!$header) disabled @endif />
-
-
-                    {{-- <input name="date" type="date" value="{{ $header ? $header->date : '' }}"
-                        class="input input-sm text-xs" " @if (!$header) disabled @endif /> --}}
+                    <input name="date" type="text" placeholder="Pilih Tanggal"
+                        x-flatpickr="{
+                            dateFormat: 'd-m-Y',
+                            defaultDate: '{{ $header && $header->date ? \Carbon\Carbon::parse($header->date)->format('d-m-Y') : null }}'
+                        }"
+                        class="input input-sm text-xs" />
                 </div>
             </div>
 
             <!-- Bagian Tombol -->
 
             <hr class=" mb-1.5 mt-2" />
+            {{-- @if (Auth::user()->name && Auth::user()->name === $header->user->name) --}}
             <div class="flex justify-between items-center">
 
                 @error('date')
@@ -189,6 +172,7 @@
                     </div>
                 </div>
             </div>
+            {{-- @endif --}}
         </div>
     </form>
 </div>

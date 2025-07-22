@@ -7,25 +7,36 @@ use App\Models\DekidakaMain;
 use App\Models\EfficiencyKpi;
 use App\Models\LossTimeKpi;
 use App\Models\PcsPerHourKpi;
+use App\Models\Product;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Http\Request;
 
 class DekidakaMainController extends Controller
 {   
-    private function updateAccumulation($dekidaka_header_id)
+    private function updateAccumulation($dekidaka_header_id, $product)
     {   
         $allMains = DekidakaMain::where('dekidaka_header_id', $dekidaka_header_id)->get();
+    
+        $productData = Product::where('name', $product)->first();
+
+        $product_cycle_time = $productData ? $productData->cycle_time : 0;
 
         $accumulation = DekidakaAccumulation::firstOrNew([
-            'dekidaka_header_id' => $dekidaka_header_id,
-        ]);
+                'dekidaka_header_id' => $dekidaka_header_id,
+            ]);
 
         $accumulation->time = $allMains->count() * 60;
         $accumulation->total_plan = $allMains->sum('plan');
         $accumulation->total_actual = $allMains->sum('actual');
         $accumulation->total_deviation = $allMains->sum('deviation');
-        $accumulation->total_loss_time = $allMains->sum('loss_time');
+
+        $accumulation->total_loss_time = $allMains->sum(function($item) {
+            return abs($item->deviation);
+        }) * $product_cycle_time;
+
         $accumulation->save();
+
+
     }
 
     private function updateKpi($dekidaka_header_id)
@@ -35,7 +46,7 @@ class DekidakaMainController extends Controller
         ]);
 
         $available_time = $accumulation->time ?? 0;
-        $effective_time = $available_time - ($accumulation->total_loss_time ?? 0);
+        $effective_time = $available_time - ($accumulation->total_loss_time + 10 ?? 0);
 
         // KPI Efficiency
         $efficiency_kpi = EfficiencyKpi::firstOrNew([
@@ -53,7 +64,7 @@ class DekidakaMainController extends Controller
         $loss_time_kpi = LossTimeKpi::firstOrNew([
             'dekidaka_header_id' => $dekidaka_header_id,
         ]);
-        $loss_time = $accumulation->total_loss_time ?? 0;
+        $loss_time = $accumulation->total_loss_time + 10 ?? 0;
         $result_loss_time = $available_time > 0 ? round(($loss_time / $available_time) * 100, 0) : 0;
 
         $loss_time_kpi->available_time = $available_time;
@@ -100,7 +111,7 @@ class DekidakaMainController extends Controller
 
         $main = DekidakaMain::create($validatedMain);
 
-        $this->updateAccumulation($main->dekidaka_header_id);
+        $this->updateAccumulation($main->dekidaka_header_id, $request->product);
 
         $this->updateKpi($main->dekidaka_header_id);
 
@@ -133,7 +144,7 @@ class DekidakaMainController extends Controller
         $main = DekidakaMain::findOrFail($request->main_id);
         $main->update($validated);
 
-        $this->updateAccumulation($main->dekidaka_header_id);
+        $this->updateAccumulation($main->dekidaka_header_id, $request->product);
 
         $this->updateKpi($main->dekidaka_header_id);
 
@@ -141,17 +152,18 @@ class DekidakaMainController extends Controller
 
     }
 
-    public function destroy($id)
+    public function destroy($id, Request $request)
     {
         $main = DekidakaMain::findOrFail($id);
         $headerId = $main->dekidaka_header_id;
 
         $main->delete();
 
-        $this->updateAccumulation($headerId);
+        $this->updateAccumulation($headerId, $request->input('product'));
 
         $this->updateKpi($headerId);
 
         return redirect()->route('production.index', ['header_id' => $headerId])->with('status', 'header-deleted');
     }
+
 }

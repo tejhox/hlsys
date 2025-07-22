@@ -1,6 +1,7 @@
 <div x-data="{
     showEditModal: false,
     isLoading: false,
+    product: null,
     mainId: null,
     hour: null,
     plan: null,
@@ -26,6 +27,7 @@
     @open-dekidaka-edit-modal.window="
     showEditModal = true; 
     mainId = $event.detail.id; 
+    product = $event.detail.product; 
     hour = $event.detail.hour; 
     plan = $event.detail.plan; 
     actual = $event.detail.actual; 
@@ -40,6 +42,7 @@
             @method('PATCH')
 
             <input type="hidden" name="main_id" :value="mainId">
+            <input type="hidden" name="product" :value="product">
 
             <div class="space-y-1">
                 <div class="flex justify-between items-center">

@@ -80,7 +80,7 @@
                     @guest
                         @if (Route::is('login'))
                             <a href="{{ route('register') }}"
-                                class="text-sm text-blue-600 font-medium underline hover:underline me-4">
+                                class="text-sm text-white font-medium underline hover:underline me-4">
                                 Buat Akun
                             </a>
                         @else

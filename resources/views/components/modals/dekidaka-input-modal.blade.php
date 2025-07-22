@@ -6,6 +6,7 @@
     headerId: null,
     mainId: null,
     shift: '1',
+    product: null,
     cycle_time: null,
     hour: null,
     plan: null,
@@ -20,6 +21,7 @@
     },
 
     submitDekidakaMain() {
+        console.log(this.product);
         fetch('{{ route('dekidaka-main.store') }}', {
                 method: 'POST',
                 headers: {
@@ -28,6 +30,7 @@
                 },
                 body: JSON.stringify({
                     dekidaka_header_id: this.headerId,
+                    product: this.product,
                     hour: this.hour,
                     plan: this.plan,
                     actual: this.actual,
@@ -49,6 +52,7 @@
 
     submitAndOpenModal() {
         this.isLoading = true;
+        console.log(this.product);
         fetch('{{ route('dekidaka-main.store') }}', {
                 method: 'POST',
                 headers: {
@@ -57,6 +61,7 @@
                 },
                 body: JSON.stringify({
                     dekidaka_header_id: this.headerId,
+                    product: this.product,
                     hour: this.hour,
                     plan: this.plan,
                     actual: this.actual,
@@ -102,6 +107,7 @@
     @open-dekidaka-input-modal.window="
     headerId = $event.detail.id; 
     shift = $event.detail.shift; 
+    product = $event.detail.product; 
     cycle_time = $event.detail.cycle_time; 
     showInputModal = true;"
     class="modal modal-open">
@@ -112,6 +118,7 @@
         <form @submit.prevent="submitDekidakaMain">
 
             <input type="hidden" name="dekidaka_header_id" :value="headerId">
+            <input type="hidden" name="product" :value="product">
 
             <div class="space-y-1">
                 <div class="flex justify-between items-center">

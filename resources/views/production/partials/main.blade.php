@@ -67,13 +67,14 @@
                                     </div>
                                 @endforelse
                             </td>
-                            <td class="border text-center bg-violet-100">
+                            <td class="border text-center bg-gray-100">
                                 <div
                                     class="{{ $main->lossTimeDetails->isEmpty() ? 'flex justify-center' : 'flex flex-col' }} px-2">
                                     <button type="button"
                                         @click="window.dispatchEvent(new CustomEvent('open-dekidaka-edit-modal', { 
                                         detail: { 
                                             id: {{ $main->id }},
+                                            product: '{{ $header->product->name }}',
                                             hour: '{{ $main->hour }}',
                                             plan: {{ $main->plan }},
                                             actual: {{ $main->actual }},
@@ -89,7 +90,8 @@
                                     <button type="button"
                                         @click="window.dispatchEvent(new CustomEvent('open-delete-modal', { 
                                     detail: { 
-                                        deleteUrl: '/dekidaka-main/{{ $main->id }}'
+                                        deleteUrl: '/dekidaka-main/{{ $main->id }}',
+                                        product: '{{ $header->product->name }}',
                                     } 
                                 }))"
                                         class="btn btn-xs btn-error {{ $main->lossTimeDetails->isEmpty() ? 'ms-1' : 'mt-1' }}">
@@ -113,6 +115,7 @@
                 detail: { 
                     id: {{ $header->id }}, 
                     shift: '{{ $header->shift->shift }}',
+                    product: '{{ $header->product->name }}',
                     cycle_time: {{ $header->product->cycle_time }}
                 }
             }))"

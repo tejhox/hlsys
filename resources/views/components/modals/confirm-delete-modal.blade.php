@@ -1,10 +1,12 @@
 <div x-data="{
     showDeleteModal: false,
+    product: null,
     deleteUrl: null,
 }" x-show="showDeleteModal" x-cloak
     @open-delete-modal.window="
         showDeleteModal = true;
         deleteUrl = $event.detail.deleteUrl;
+        product = $event.detail.product;
     "
     class="modal modal-open">
 
@@ -20,6 +22,7 @@
             <form method="POST" :action="deleteUrl">
                 @csrf
                 @method('DELETE')
+                <input type="hidden" name="product" :value="product">
                 <button type="submit" class="btn btn-sm btn-error">Hapus</button>
             </form>
         </div>

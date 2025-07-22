@@ -83,7 +83,7 @@
                             <span>Waktu Efektif (Hour) :</span>
                         </div>
                         <span class="text-orange-600">{{ $header->pcsPerHourKpi->effective_hour ?? 0 }} <span
-                                class="text-slate-600">Hour</span></span>
+                                class="text-slate-600">Hr</span></span>
                     </div>
                 </li>
                 <hr class="border-slate-400 my-2" />
@@ -93,7 +93,7 @@
                             <span>Pcs/Hour</span>
                             <span class="ms-[72px]">:</span>
                         </div>
-                        <span class="text-red-500">{{ round($header->pcsPerHourKpi->result_pcs_per_hour) ?? 0 }} <span
+                        <span class="text-blue-600">{{ round($header->pcsPerHourKpi->result_pcs_per_hour) ?? 0 }} <span
                                 class="text-slate-600">Pcs</span></span>
                     </div>
                 </li>
@@ -126,7 +126,7 @@
                 <li class="text-sm text-slate-800 font-bold">
                     <div class="flex justify-between">
                         <span>Cycle Time Actual :</span>
-                        <span class="text-red-500">{{ $header->cycleTimeKpi->result_cycle_time_actual ?? 0 }}
+                        <span class="text-blue-600">{{ $header->cycleTimeKpi->result_cycle_time_actual ?? 0 }}
                             <span class="text-slate-600">Menit</span></span>
                     </div>
                 </li>
