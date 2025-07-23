@@ -8,7 +8,8 @@ use Illuminate\Http\Request;
 class DekidakaHeaderController extends Controller
 {
     public function storeOrUpdate(Request $request)
-    {
+    {   
+        // dd($request->all());
         $validated = $request->validate([
             'line_id' => 'required|exists:lines,id',
             'product_id' => 'required|exists:products,id',
@@ -16,10 +17,6 @@ class DekidakaHeaderController extends Controller
             'group_id' => 'required|exists:groups,id',
             'date' => 'required|date',
         ]);
-
-        // Konversi tanggal ke format Y-m-d untuk DB
-        $date = \Carbon\Carbon::createFromFormat('d-m-Y', $request->date)->format('Y-m-d');
-        $validated['date'] = $date;
 
         $validated['user_id'] = auth()->id();
 

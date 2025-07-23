@@ -46,7 +46,7 @@ class DekidakaMainController extends Controller
         ]);
 
         $available_time = $accumulation->time ?? 0;
-        $effective_time = $available_time - ($accumulation->total_loss_time + 10 ?? 0);
+        $effective_time = $available_time - ($accumulation->total_loss_time ?? 0);
 
         // KPI Efficiency
         $efficiency_kpi = EfficiencyKpi::firstOrNew([
@@ -64,7 +64,7 @@ class DekidakaMainController extends Controller
         $loss_time_kpi = LossTimeKpi::firstOrNew([
             'dekidaka_header_id' => $dekidaka_header_id,
         ]);
-        $loss_time = $accumulation->total_loss_time + 10 ?? 0;
+        $loss_time = $accumulation->total_loss_time ?? 0;
         $result_loss_time = $available_time > 0 ? round(($loss_time / $available_time) * 100, 0) : 0;
 
         $loss_time_kpi->available_time = $available_time;
