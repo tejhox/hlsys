@@ -78,24 +78,27 @@
                         </div>
                     </div>
 
-                    <div x-data="{ dateDisplay: '{{ $header ? \Carbon\Carbon::parse($header->date)->format('d-m-Y') : '' }}', dateValue: '{{ $header ? \Carbon\Carbon::parse($header->date)->format('Y-m-d') : '' }}' }">
-                        <input type="text" x-model="dateDisplay" x-init="flatpickr($el, {
-                            dateFormat: 'd-m-Y',
-                            defaultDate: dateDisplay,
-                            onChange: (selectedDates, dateStr, instance) => {
-                                let y = selectedDates[0].getFullYear();
-                                let m = String(selectedDates[0].getMonth() + 1).padStart(2, '0');
-                                let d = String(selectedDates[0].getDate()).padStart(2, '0');
-                                dateValue = `${y}-${m}-${d}`;
-                            }
-                        })" placeholder="Pilih Tanggal"
-                            class="input input-sm border-slate-400 bg-white text-slate-900 text-xs" @if ($header)
-                        readonly
-                        @endif
-                        :disabled="editMode"
-                        />
-                        <input type="hidden" name="date" :value="dateValue" />
+                    <input name="date" type="{{ $header ? 'text' : 'date' }}"
+                        value="{{ $header ? \Carbon\Carbon::parse($header->date)->format('d-m-Y') : '' }}"
+                        class="hidden sm:block input input-sm border-slate-400 bg-white text-slate-900 text-xs"
+                        @if ($header) readonly @endif :disabled="editMode" />
+
+                    <div class="sm:hidden relative mt-1">
+                        <div
+                            class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none text-gray-700 z-10">
+                            <svg class="h-4 w-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 0 0 2-2V7a2
+                                2 0 0 0-2-2H5a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2z" />
+                            </svg>
+                        </div>
+                        <input name="date" type="{{ $header ? 'text' : 'date' }}"
+                            value="{{ $header ? \Carbon\Carbon::parse($header->date)->format('d-m-Y') : '' }}"
+                            class="input input-sm border-slate-400 text-slate-900 text-xs ps-9 w-full bg-white"
+                            @if ($header) readonly @endif :disabled="editMode"
+                            placeholder="Tanggal">
                     </div>
+
 
                 </div>
             </div>
@@ -154,11 +157,10 @@
                             </select>
                         </div>
                     </div>
-                    <input name="date" type="date"
-                        value="{{ $header ? \Carbon\Carbon::parse($header->date)->format('Y-m-d') : '' }}"
+
+                    <input name="date" type="date" value="{{ $header ? $header->date : '' }}"
                         class="input input-sm border-slate-400 bg-white text-slate-900 text-xs"
                         @if (!$header) disabled @endif />
-
                 </div>
             </div>
 

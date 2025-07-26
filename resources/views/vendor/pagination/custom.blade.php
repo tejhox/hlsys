@@ -2,7 +2,7 @@
     <nav role="navigation" aria-label="{{ __('Pagination Navigation') }}" class="w-full">
         <div class="flex justify-end space-x-1">
             {{-- Previous Page Link --}}
-            {{-- @if ($paginator->onFirstPage())
+            @if ($paginator->onFirstPage())
                 <span class="btn btn-xs btn-outline btn-primary btn-disabled">
                     {!! __('pagination.previous') !!}
                 </span>
@@ -10,7 +10,7 @@
                 <a href="{{ $paginator->previousPageUrl() }}" class="btn btn-xs btn-outline btn-primary">
                     {!! __('pagination.previous') !!}
                 </a>
-            @endif --}}
+            @endif
 
             {{-- Page Number Links --}}
             @foreach ($elements as $element)
@@ -39,7 +39,7 @@
                     {!! __('pagination.next') !!}
                 </a>
             @else
-                <span class="btn btn-xs btn-outline btn-secondary disabled cursor-not-allowed">
+                <span class="btn btn-xs btn-outline btn-secondary btn-disabled cursor-not-allowed">
                     {!! __('pagination.next') !!}
                 </span>
             @endif

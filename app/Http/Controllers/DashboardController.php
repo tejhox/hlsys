@@ -16,76 +16,76 @@ class DashboardController extends Controller
             ->where('line_id', 1)
             ->where('group_id', 1)
             ->latest()
-            ->paginate(5, ['*'], 'page_group1');
+            ->paginate(7, ['*'], 'page_group1');
 
         $line1group2 = DekidakaHeader::with($relations)
             ->where('line_id', 1)
             ->where('group_id', 2)
             ->latest()
-            ->paginate(5, ['*'], 'page_group2');
+            ->paginate(7, ['*'], 'page_group2');
 
         $line1group3 = DekidakaHeader::with($relations)
             ->where('line_id', 1)
             ->where('group_id', 3)
             ->latest()
-            ->paginate(5, ['*'], 'page_group3');
+            ->paginate(7, ['*'], 'page_group3');
 
         // Line ER 02    
         $line2group1 = DekidakaHeader::with($relations)
             ->where('line_id', 2)
             ->where('group_id', 1)
             ->latest()
-            ->paginate(5, ['*'], 'page_group1');
+            ->paginate(7, ['*'], 'page_group1');
 
         $line2group2 = DekidakaHeader::with($relations)
             ->where('line_id', 2)
             ->where('group_id', 2)
             ->latest()
-            ->paginate(5, ['*'], 'page_group2');
+            ->paginate(7, ['*'], 'page_group2');
 
         $line2group3 = DekidakaHeader::with($relations)
             ->where('line_id',3)
             ->where('group_id', 3)
             ->latest()
-            ->paginate(5, ['*'], 'page_group3');
+            ->paginate(7, ['*'], 'page_group3');
 
         // Line ER 03    
         $line3group1 = DekidakaHeader::with($relations)
             ->where('line_id', 3)
             ->where('group_id', 1)
             ->latest()
-            ->paginate(5, ['*'], 'page_group1');
+            ->paginate(7, ['*'], 'page_group1');
 
         $line3group2 = DekidakaHeader::with($relations)
             ->where('line_id', 3)
             ->where('group_id', 2)
             ->latest()
-            ->paginate(5, ['*'], 'page_group2');
+            ->paginate(7, ['*'], 'page_group2');
 
         $line3group3 = DekidakaHeader::with($relations)
             ->where('line_id', 3)
             ->where('group_id', 3)
             ->latest()
-            ->paginate(5, ['*'], 'page_group3');
+            ->paginate(7, ['*'], 'page_group3');
 
         // Line ER 150
         $line4group1 = DekidakaHeader::with($relations)
             ->where('line_id', 4)
             ->where('group_id', 1)
             ->latest()
-            ->paginate(5, ['*'], 'page_group1');
+            ->paginate(7, ['*'], 'page_group1');
 
         $line4group2 = DekidakaHeader::with($relations)
             ->where('line_id', 4)
             ->where('group_id', 2)
             ->latest()
-            ->paginate(5, ['*'], 'page_group2');
+            ->paginate(7, ['*'], 'page_group2');
 
         $line4group3 = DekidakaHeader::with($relations)
             ->where('line_id', 4)
             ->where('group_id', 3)
             ->latest()
-            ->paginate(5, ['*'], 'page_group3');
+            ->paginate(7, ['*'], 'page_group3');
 
 
         return view('dashboard.index', 

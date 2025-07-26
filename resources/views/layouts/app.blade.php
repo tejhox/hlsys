@@ -42,10 +42,7 @@
 
         <!-- Page Content -->
         <main>
-            <div class="sm:flex">
-                @include('layouts.sidebar')
-                {{ $slot }}
-            </div>
+            {{ $slot }}
         </main>
     </div>
 </body>
