@@ -27,10 +27,15 @@ class ProductionController extends Controller
                 'product', 
                 'shift', 
                 'group', 
-                'dekidakaMains.lossTimeDetails'
+                'dekidakaMains.lossTimeDetails',
+                'efficiencyKpi',
+                'lossTimeKpi',
+                'pcsPerHourKpi',
+                'cycleTimeKpi',
             ])->find($request->header_id);
-
         }
+
+        // dd($header);
 
         return view('production.index', compact(
             'lines',

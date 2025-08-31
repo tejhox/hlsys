@@ -22,13 +22,14 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
         integrity="sha512-..." crossorigin="anonymous" referrerpolicy="no-referrer" />
     <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 
 <body class="font-sans antialiased min-h-screen bg-white bg-center bg-fixed bg-cover"
     style="background-color: #f3f4f6; background-image: url('{{ asset('images/bg5.jpg') }}')">
 
-    <div class="min-h-screen ">
+    <div class="h-screen">
         @include('layouts.navigation')
 
         <!-- Page Heading -->
@@ -45,6 +46,13 @@
             {{ $slot }}
         </main>
     </div>
+
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            lucide.createIcons();
+        });
+    </script>
 </body>
 
 </html>

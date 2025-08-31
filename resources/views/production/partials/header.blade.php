@@ -1,4 +1,4 @@
-<div class="bg-gradient-to-r from-blue-200 to-blue-700 shadow rounded-lg p-2">
+<div class="bg-gradient-to-r from-blue-400 to-blue-700 shadow rounded-lg p-2 sm:border">
     <div class="text-xs text-white text-right font-semibold">
         @if (Auth::check())
             {{ Auth::user()->name }}
@@ -9,6 +9,8 @@
         @endif
     </div>
     <hr class="border-1  mb-2 mt-1" />
+
+    {{-- <pre>{{ print_r($header, true) }}</pre> --}}
 
     <form method="POST" action="{{ route('dekidaka-header.storeOrUpdate') }}">
         <div x-data="{ editMode: false }" x-cloak>
@@ -78,12 +80,7 @@
                         </div>
                     </div>
 
-                    <input name="date" type="{{ $header ? 'text' : 'date' }}"
-                        value="{{ $header ? \Carbon\Carbon::parse($header->date)->format('d-m-Y') : '' }}"
-                        class="hidden sm:block input input-sm border-slate-400 bg-white text-slate-900 text-xs"
-                        @if ($header) readonly @endif :disabled="editMode" />
-
-                    <div class="sm:hidden relative mt-1">
+                    <div class="relative mt-1">
                         <div
                             class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none text-gray-700 z-10">
                             <svg class="h-4 w-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
@@ -94,7 +91,7 @@
                         </div>
                         <input name="date" type="{{ $header ? 'text' : 'date' }}"
                             value="{{ $header ? \Carbon\Carbon::parse($header->date)->format('d-m-Y') : '' }}"
-                            class="input input-sm border-slate-400 text-slate-900 text-xs ps-9 w-full bg-white"
+                            class="input input-sm border-slate-400 text-slate-900 text-xs ps-9 sm:ps-10 w-full bg-white"
                             @if ($header) readonly @endif :disabled="editMode"
                             placeholder="Tanggal">
                     </div>
@@ -158,9 +155,21 @@
                         </div>
                     </div>
 
-                    <input name="date" type="date" value="{{ $header ? $header->date : '' }}"
-                        class="input input-sm border-slate-400 bg-white text-slate-900 text-xs"
-                        @if (!$header) disabled @endif />
+                    <div class="relative mt-1">
+                        <div
+                            class="sm:hidden absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none text-gray-700 z-10">
+                            <svg class="h-4 w-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 0 0 2-2V7a2
+                                2 0 0 0-2-2H5a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2z" />
+                            </svg>
+                        </div>
+                        <input name="date" type="date" value="{{ $header ? $header->date : '' }}"
+                            class="input input-sm border-slate-400 bg-white ps-9 sm:ps-2 text-slate-900 text-xs"
+                            @if (!$header) disabled @endif />
+                    </div>
+
+
                 </div>
             </div>
 

@@ -5,6 +5,7 @@
     error: false,
     headerId: null,
     mainId: null,
+    date: null,
     shift: '1',
     product: null,
     cycle_time: null,
@@ -21,7 +22,6 @@
     },
 
     submitDekidakaMain() {
-        console.log(this.product);
         fetch('{{ route('dekidaka-main.store') }}', {
                 method: 'POST',
                 headers: {
@@ -30,6 +30,7 @@
                 },
                 body: JSON.stringify({
                     dekidaka_header_id: this.headerId,
+                    date: this.date,
                     product: this.product,
                     hour: this.hour,
                     plan: this.plan,
@@ -52,7 +53,6 @@
 
     submitAndOpenModal() {
         this.isLoading = true;
-        console.log(this.product);
         fetch('{{ route('dekidaka-main.store') }}', {
                 method: 'POST',
                 headers: {
@@ -61,6 +61,7 @@
                 },
                 body: JSON.stringify({
                     dekidaka_header_id: this.headerId,
+                    date: this.date,
                     product: this.product,
                     hour: this.hour,
                     plan: this.plan,
@@ -105,7 +106,9 @@
 }" x-init="hour = shift === '1' ? '08.00 - 09.00' : '20.00 - 21.00'" x-show="showInputModal" x-cloak
     @btn-status.window="btnStatus = $event.detail.status"
     @open-dekidaka-input-modal.window="
+    {{-- console.log('event.detail', $event.detail); --}}
     headerId = $event.detail.id; 
+    date = $event.detail.date;
     shift = $event.detail.shift; 
     product = $event.detail.product; 
     cycle_time = $event.detail.cycle_time; 
@@ -113,12 +116,13 @@
     class="modal modal-open">
 
 
-    <div class="modal-box max-w-80 bg-white">
+    <div class="modal-box bg-white">
 
         <form @submit.prevent="submitDekidakaMain">
 
             <input type="hidden" name="dekidaka_header_id" :value="headerId">
             <input type="hidden" name="product" :value="product">
+            <input type="hidden" name="date" :value="date">
 
             <div class="space-y-1">
                 <div class="flex justify-between items-center">

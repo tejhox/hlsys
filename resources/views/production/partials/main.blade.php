@@ -1,6 +1,6 @@
 <div x-data="{
-    viewMode: null
-}" class="sm:min-h-[393px] bg-white shadow rounded-lg p-2 mt-1">
+    viewDetail: null
+}" class="sm:min-h-[393px] bg-white shadow rounded-lg p-2 mt-1 sm:border">
     <div>
         <table class="table table-xs mt-1.5">
             <thead>
@@ -15,10 +15,10 @@
             <tbody>
                 @if ($header)
                     @forelse ($header->dekidakaMains as $main)
-                        <tr @click="viewMode = viewMode === {{ $main->id }} ? null : {{ $main->id }}"
+                        <tr @click="viewDetail = viewDetail === {{ $main->id }} ? null : {{ $main->id }}"
                             class="text-xs
                             text-center text-slate-800 cursor-pointer hover:bg-slate-100"
-                            :class="viewMode === {{ $main->id }} ? 'bg-slate-100' : ''">
+                            :class="viewDetail === {{ $main->id }} ? 'bg-slate-100' : ''">
                             <td
                                 class="border border-b-slate-400 font-bold whitespace-nowrap 
                             {{ $loop->index > 3 ? 'bg-slate-200' : 'bg-gray-100' }}">
@@ -31,7 +31,7 @@
                             <td class="border border-b-slate-400 font-semibold text-red-600">{{ $main->loss_time }}'
                             </td>
                         </tr>
-                        <tr x-show="viewMode === {{ $main->id }}" x-cloak
+                        <tr x-show="viewDetail === {{ $main->id }}" x-cloak
                             x-transition:enter="transition ease-out duration-200 transform"
                             x-transition:enter-start="-translate-y-4 opacity-0"
                             x-transition:enter-end="translate-y-0 opacity-200"

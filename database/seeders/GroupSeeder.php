@@ -14,13 +14,13 @@ class GroupSeeder extends Seeder
      */
     public function run(): void
     {   
-        DB::statement('SET FOREIGN_KEY_CHECKS=0;');
+        // DB::statement('SET FOREIGN_KEY_CHECKS=0;');
 
         // Mengosongkan tabel dengan aman
-        DB::table('groups')->truncate();
+        // DB::table('groups')->truncate();
 
         // Mengaktifkan kembali foreign key checks
-        DB::statement('SET FOREIGN_KEY_CHECKS=1;');
+        // DB::statement('SET FOREIGN_KEY_CHECKS=1;');
 
         $groups = ['1', '2', '3'];
 

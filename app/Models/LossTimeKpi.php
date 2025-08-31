@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class LossTimeKpi extends Model
 {
-    protected $fillable = ['dekidaka_header_id', 'available_time', 'loss_time', 'result_loss_time'];
+    protected $fillable = ['dekidaka_header_id', 'available_time', 'loss_time', 'result_loss_time', 'date'];
 
     public function dekidakaHeader() 
     {

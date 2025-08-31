@@ -11,6 +11,7 @@ use App\Models\Product;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Http\Request;
 
+
 class DekidakaMainController extends Controller
 {   
     private function updateAccumulation($dekidaka_header_id, $product)
@@ -35,66 +36,82 @@ class DekidakaMainController extends Controller
         }) * $product_cycle_time;
 
         $accumulation->save();
-
-
     }
 
-    private function updateKpi($dekidaka_header_id)
+    private function updateKpi($dekidaka_header_id, $date)
     {
-        $accumulation = DekidakaAccumulation::firstOrNew([
-            'dekidaka_header_id' => $dekidaka_header_id,
-        ]);
+        try {
+            $accumulation = DekidakaAccumulation::firstOrNew([
+                'dekidaka_header_id' => $dekidaka_header_id,
+            ]);
 
-        $available_time = $accumulation->time ?? 0;
-        $effective_time = $available_time - ($accumulation->total_loss_time ?? 0);
+            $available_time = $accumulation->time ?? 0;
+            $effective_time = $available_time - ($accumulation->total_loss_time ?? 0);
+            $actual_output = $accumulation->total_actual ?? 0;
+            
+            // KPI Efficiency
+            $efficiency_kpi = EfficiencyKpi::firstOrNew([
+                'dekidaka_header_id' => $dekidaka_header_id,
+            ]);
+            $result_efficiency = $available_time > 0 ? round(($effective_time / $available_time) * 100, 0) : 0;
+            
+            $efficiency_kpi->date = $date;
+            $efficiency_kpi->available_time = $available_time;
+            $efficiency_kpi->effective_time = $effective_time;
+            $efficiency_kpi->result_efficiency = $result_efficiency;
+            $efficiency_kpi->save();
 
-        // KPI Efficiency
-        $efficiency_kpi = EfficiencyKpi::firstOrNew([
-            'dekidaka_header_id' => $dekidaka_header_id,
-        ]);
+            // KPI Loss Time
+            $loss_time_kpi = LossTimeKpi::firstOrNew([
+                'dekidaka_header_id' => $dekidaka_header_id,
+            ]);
 
-        $result_efficiency = $available_time > 0 ? round(($effective_time / $available_time) * 100, 0) : 0;
+            $loss_time = $accumulation->total_loss_time ?? 0;
+            $result_loss_time = $available_time > 0 ? round(($loss_time / $available_time) * 100, 0) : 0;
+            
+            $loss_time_kpi->date = $date;
+            $loss_time_kpi->available_time = $available_time;
+            $loss_time_kpi->loss_time = $loss_time;
+            $loss_time_kpi->result_loss_time = $result_loss_time;
+            $loss_time_kpi->save();
 
-        $efficiency_kpi->available_time = $available_time;
-        $efficiency_kpi->effective_time = $effective_time;
-        $efficiency_kpi->result_efficiency = $result_efficiency;
-        $efficiency_kpi->save();
+            // KPI Pcs/Hour
+            $pcs_per_hour_kpi = PcsPerHourKpi::firstOrNew([
+                'dekidaka_header_id' => $dekidaka_header_id,
+            ]);
 
-        // KPI Loss Time
-        $loss_time_kpi = LossTimeKpi::firstOrNew([
-            'dekidaka_header_id' => $dekidaka_header_id,
-        ]);
-        $loss_time = $accumulation->total_loss_time ?? 0;
-        $result_loss_time = $available_time > 0 ? round(($loss_time / $available_time) * 100, 0) : 0;
+            $effective_hour = $effective_time / 60;
+            $result_pcs_per_hour = $effective_hour > 0 ? ($actual_output / $effective_hour) : 0;
 
-        $loss_time_kpi->available_time = $available_time;
-        $loss_time_kpi->loss_time = $loss_time;
-        $loss_time_kpi->result_loss_time = $result_loss_time;
-        $loss_time_kpi->save();
+            $pcs_per_hour_kpi->date = $date;
+            $pcs_per_hour_kpi->actual_output = $actual_output;
+            $pcs_per_hour_kpi->effective_hour = $effective_hour;
+            $pcs_per_hour_kpi->result_pcs_per_hour = $result_pcs_per_hour;
+            $pcs_per_hour_kpi->save();
 
-        // KPI Pcs/Hour
-        $pcs_per_hour_kpi = PcsPerHourKpi::firstOrNew([
-            'dekidaka_header_id' => $dekidaka_header_id,
-        ]);
-        $actual_output = $accumulation->total_actual ?? 0;
-        $effective_hour = $effective_time / 60;
-        $result_pcs_per_hour = $effective_hour > 0 ? ($actual_output / $effective_hour) : 0;
+            // KPI Cycle Time
+            $cycle_time_kpi = CycleTimeKpi::firstOrNew([
+                'dekidaka_header_id' => $dekidaka_header_id,
+            ]); 
+            $result_cycle_time_actual = $actual_output > 0 ? ($effective_time / $actual_output) : 0;
 
-        $pcs_per_hour_kpi->actual_output = $actual_output;
-        $pcs_per_hour_kpi->effective_hour = $effective_hour;
-        $pcs_per_hour_kpi->result_pcs_per_hour = $result_pcs_per_hour;
-        $pcs_per_hour_kpi->save();
+            $cycle_time_kpi->date = $date;
+            $cycle_time_kpi->effective_time = $effective_time;
+            $cycle_time_kpi->actual_output = $actual_output;
+            $cycle_time_kpi->result_cycle_time_actual = $result_cycle_time_actual;
+            $cycle_time_kpi->save();
+        }
+            catch (\Throwable $e) {
+            // Log error untuk debugging
+            Log::error('Gagal menyimpan PcsPerHourKpi', [
+                'dekidaka_header_id' => $dekidaka_header_id,
+                'date' => $date,
+                'error' => $e->getMessage(),
+            ]);
 
-        // KPI Cycle Time
-        $cycle_time_kpi = CycleTimeKpi::firstOrNew([
-            'dekidaka_header_id' => $dekidaka_header_id,
-        ]); 
-        $result_cycle_time_actual = $actual_output > 0 ? ($effective_time / $actual_output) : 0;
-
-        $cycle_time_kpi->effective_time = $effective_time;
-        $cycle_time_kpi->actual_output = $actual_output;
-        $cycle_time_kpi->result_cycle_time_actual = $result_cycle_time_actual;
-        $cycle_time_kpi->save();
+            // optional: lempar balik exception kalau perlu dihentikan
+            // throw $e;
+        }
     }
 
     public function store(Request $request) 
@@ -113,7 +130,7 @@ class DekidakaMainController extends Controller
 
         $this->updateAccumulation($main->dekidaka_header_id, $request->product);
 
-        $this->updateKpi($main->dekidaka_header_id);
+        $this->updateKpi($main->dekidaka_header_id, $request->date);
 
         return response()->json([
             'message' => 'Data berhasil disimpan.',
@@ -146,7 +163,7 @@ class DekidakaMainController extends Controller
 
         $this->updateAccumulation($main->dekidaka_header_id, $request->product);
 
-        $this->updateKpi($main->dekidaka_header_id);
+        $this->updateKpi($main->dekidaka_header_id, $request->date);
 
         return redirect()->route('production.index', ['header_id' => $main->dekidaka_header_id])->with('status', 'header-updated');
 
@@ -161,7 +178,7 @@ class DekidakaMainController extends Controller
 
         $this->updateAccumulation($headerId, $request->input('product'));
 
-        $this->updateKpi($headerId);
+        $this->updateKpi($headerId, $request->date);
 
         return redirect()->route('production.index', ['header_id' => $headerId])->with('status', 'header-deleted');
     }

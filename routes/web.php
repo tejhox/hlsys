@@ -3,6 +3,7 @@
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DekidakaHeaderController;
 use App\Http\Controllers\DekidakaMainController;
+use App\Http\Controllers\KpiChartController;
 use App\Http\Controllers\KpiController;
 use App\Http\Controllers\LossTimeDetailController;
 use App\Http\Controllers\ProductionController;
@@ -21,6 +22,15 @@ Route::patch('/dekidaka-main', [DekidakaMainController::class, 'update'])->name(
 Route::delete('/dekidaka-main/{id}', [DekidakaMainController::class, 'destroy'])->name('dekidaka-main.destroy');
 
 Route::get('/kpi', [KpiController::class, 'index'])->name('kpi.index');
+
+//KPI Chart
+Route::get('/kpi-chart', [KpiChartController::class, 'index'])->middleware(['auth'])->name('kpi-chart');
+
+//API for Charts
+Route::get('/kpi/efficiencyChart', [KpiChartController::class, 'efficiencyChart'])->name('efficiencyChart.get');
+Route::get('/kpi/lossTimeChart', [KpiChartController::class, 'lossTimeChart'])->name('efficiencyChart.get');
+Route::get('/kpi/pcsPerHourChart', [KpiChartController::class, 'pcsPerHourChart'])->name('efficiencyChart.get');
+Route::get('/kpi/cycleTimeChart', [KpiChartController::class, 'cycleTimeChart'])->name('efficiencyChart.get');
 
 //API for AJAX
 Route::post('/loss-time-details', [LossTimeDetailController::class, 'storeOrUpdateLossTimeDetail'])->name('loss-time-detail.store');

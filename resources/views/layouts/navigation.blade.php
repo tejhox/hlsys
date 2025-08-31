@@ -1,7 +1,7 @@
     <nav x-data="{ open: false }"
-        class="bg-gradient-to-r from-blue-400 to-blue-800 border-gray-100 shadow shadow-slate-600 sm:bg-gradient-to-r sm:from-blue-700 sm:to-blue-900 sm:border-0 sm:shadow-slate-400">
+        class="bg-gradient-to-r from-blue-400 to-blue-800 border-gray-100 shadow-md shadow-slate-400 sm:bg-gradient-to-r sm:from-blue-700 sm:to-blue-900 sm:border-0 sm:shadow-slate-400">
         <!-- Primary Navigation Menu -->
-        <div class="max-w-7xl mx-auto px-2 sm:px-0 lg:px-0">
+        <div class="px-2 sm:px-2 lg:px-2">
             <div class="flex justify-between h-14 sm:h-16">
                 <div class="flex">
                     <!-- Logo -->
@@ -17,32 +17,26 @@
                         <x-nav-link :href="route('dashboard.index')" :active="request()->routeIs('dashboard.index')">
                             {{ __('Dashboard') }}
                         </x-nav-link>
-                        {{-- <x-nav-link :href="route('production.index')" :active="request()->routeIs('production.index')">
-                            {{ __('Production') }}
-                        </x-nav-link> --}}
                     </div>
                 </div>
 
                 <!-- Settings Dropdown -->
+                @if (Route::is('login'))
+                @else
                 <div class="hidden sm:flex sm:items-center sm:ms-6">
                     <x-dropdown align="right" width="48">
                         <x-slot name="trigger">
                             <button
-                                class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition ease-in-out duration-150">
-                                <div>
+                                class="bg-white/10 hover:bg-white/20 text-white border border-white/20 backdrop-blur-sm px-4 py-2 rounded-lg flex items-center gap-2 transition-all">
+                                <div class="w-8 h-8 bg-white/20 rounded-full flex items-center justify-center me-2">
+                                    <i data-lucide="users" class="h-4 w-4"></i>
+                                </div>
+                                <span>
                                     @if (Auth::check())
                                         {{ Auth::user()->name }}
                                     @endif
-                                </div>
-
-                                <div class="ms-1">
-                                    <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg"
-                                        viewBox="0 0 20 20">
-                                        <path fill-rule="evenodd"
-                                            d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-                                            clip-rule="evenodd" />
-                                    </svg>
-                                </div>
+                                </span>
+                                <i data-lucide="chevron-down" class="h-4 w-4" :class="{ 'rotate-180': open }"></i>
                             </button>
                         </x-slot>
 
@@ -50,12 +44,12 @@
                             <x-dropdown-link :href="route('profile.edit')">
                                 {{ __('Profile') }}
                             </x-dropdown-link>
-
+                            <hr />
                             <!-- Authentication -->
                             <form method="POST" action="{{ route('logout') }}">
                                 @csrf
 
-                                <x-dropdown-link :href="route('logout')"
+                                <x-dropdown-link :href="route('logout')" textColor="text-red-500"
                                     onclick="event.preventDefault();
                                                     this.closest('form').submit();">
                                     {{ __('Log Out') }}
@@ -64,6 +58,7 @@
                         </x-slot>
                     </x-dropdown>
                 </div>
+                @endif
 
                 <!-- Hamburger -->
                 @if (Route::is('register'))

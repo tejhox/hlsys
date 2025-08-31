@@ -9,7 +9,7 @@ class DashboardController extends Controller
 {
    public function index() 
     {
-        $relations = ['line', 'product', 'shift', 'group', 'user'];
+        $relations = ['line', 'product', 'shift', 'group', 'user', 'dekidakaAccumulation'];
         
         // Line ER 01
         $line1group1 = DekidakaHeader::with($relations)

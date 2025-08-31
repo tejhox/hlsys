@@ -25,6 +25,7 @@
     }
 }" x-show="showEditModal" x-cloak
     @open-dekidaka-edit-modal.window="
+    {{-- console.log('event.detail', $event.detail); --}}
     showEditModal = true; 
     mainId = $event.detail.id; 
     product = $event.detail.product; 

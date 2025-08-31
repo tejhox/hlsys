@@ -1,8 +1,6 @@
 <?php
 
 namespace App\Http\Controllers;
-
-use App\Models\DekidakaMain;
 use App\Models\LossTimeDetail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
@@ -11,7 +9,6 @@ class LossTimeDetailController extends Controller
 {
     public function storeOrUpdateLossTimeDetail(Request $request)
     {
-        // Log::info('Request masuk ke storeLossTimeDetail', $request->all());
         try {
             $request->validate([
                 'main_id' => 'required|exists:dekidaka_mains,id',

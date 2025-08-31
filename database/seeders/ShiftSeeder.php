@@ -14,13 +14,13 @@ class ShiftSeeder extends Seeder
      */
     public function run(): void
     {
-        DB::statement('SET FOREIGN_KEY_CHECKS=0;');
+        // DB::statement('SET FOREIGN_KEY_CHECKS=0;');
 
         // Mengosongkan tabel dengan aman
-        DB::table('shifts')->truncate();
+        // DB::table('shifts')->truncate();
 
         // Mengaktifkan kembali foreign key checks
-        DB::statement('SET FOREIGN_KEY_CHECKS=1;');
+        // DB::statement('SET FOREIGN_KEY_CHECKS=1;');
         
         $shifts = ['1', '2', '3'];
 

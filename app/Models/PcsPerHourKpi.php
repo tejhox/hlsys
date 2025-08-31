@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class PcsPerHourKpi extends Model
 {
-    protected $fillable = ['dekidaka_header_id', 'actual_output', 'effective_hour', 'result_pcs_per_hour'];
+    protected $fillable = ['dekidaka_header_id', 'actual_output', 'effective_hour', 'result_pcs_per_hour', 'date'];
 
     public function dekidakaHeader() 
     {

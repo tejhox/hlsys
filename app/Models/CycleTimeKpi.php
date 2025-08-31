@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class CycleTimeKpi extends Model
 {
-    protected $fillable = ['dekidaka_header_id', 'effective_time', 'actual_output', 'result_cycle_time_actual'];
+    protected $fillable = ['dekidaka_header_id', 'effective_time', 'actual_output', 'result_cycle_time_actual', 'date'];
 
     public function dekidakaHeader() 
     {
