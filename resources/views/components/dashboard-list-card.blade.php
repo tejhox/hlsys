@@ -1,7 +1,7 @@
 <div x-data="{
     btnSelected: 'ER 01'
 }"
-    class="p-1.5 rounded-lg shadow-md bg-gradient-to-r from-blue-300 to-blue-700 sm:p-0 sm:bg-gradient-to-br sm:from-white sm:to-slate-200 sm:border sm:text-2xl">
+    class="min-h-screen p-1.5 rounded-lg shadow-md bg-gradient-to-r from-blue-400 to-blue-700 sm:p-0 sm:bg-gradient-to-br sm:from-white sm:to-slate-200 sm:border sm:text-2xl">
     <div class="hidden sm:block py-1 bg-gradient-to-r from-blue-600 to-blue-800 rounded-t-lg shadow shadow-slate-400">
         <h1 class="font-extrabold text-white text-xl py-2 px-4">
             PRODUCTION CONTROL LIST
@@ -19,7 +19,7 @@
 
         <div class="mb-2 sm:bg-none sm:pe-1 sm:mb-0 sm:rounded-lg sm:w-1/2">
             <div
-                class="flex rounded-lg text-sm shadow-md shadow-slate-400 py-1 px-2 space-x-1 sm:mb-1 sm:py-2 sm:space-x-4 bg-gradient-to-r from-blue-400 to-blue-800 sm:bg-none sm:bg-white">
+                class="flex rounded-lg text-sm shadow-md sm:shadow-slate-400 py-1 px-2 space-x-1 sm:mb-1 sm:py-2 sm:space-x-4 bg-gradient-to-r from-blue-500 to-blue-800 sm:bg-none sm:bg-white">
                 <div @click="
                     btnSelected = 'ER 01';
                     window.dispatchEvent(new CustomEvent('btn-selected', { detail: btnSelected }));

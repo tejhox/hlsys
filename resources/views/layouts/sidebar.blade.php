@@ -1,12 +1,12 @@
     @if (request()->routeIs('dashboard.index'))
-        <div class="bg-white p-3">
+        <div class="min-h-screen bg-white p-3 shadow-[4px_0_6px_-1px_rgba(0,0,0,0.1)] shadow-slate-400">
             <a href="{{ route('production.index') }}" class="block">
                 <div>
                     @include('components.sidebar-menu-btn', [
                         'bgColor' => 'bg-gradient-to-r from-white to-emerald-200',
                         'iconColor' => 'bg-blue-500',
                         'icon' => '<i data-lucide="file-plus-2" class="w-5 h-5 text-white"></i>',
-                        'btnText' => '<div class="flex w-full">Buat Laporan <span class="ms-24"><i class="fa-solid fa-plus"></i></span></div>',
+                        'btnText' => '<div class="flex w-full">Buat Laporan <span class="hidden lg:block lg:ms-24"><i class="fa-solid fa-plus"></i></span></div>',
                     ])
                 </div>
             </a>

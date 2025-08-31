@@ -68,8 +68,6 @@
                                         @click="window.location='{{ route('production.index', ['header_id' => $header->id]) }}';"
                                         class="btn btn-xs btn-outline btn-primary"><i
                                             class="fa-solid fa-eye"></i></i></button>
-                                    <button type="button" class="btn btn-xs btn-outline btn-secondary"><i
-                                            class="fa-solid fa-pencil"></i></button>
                                 </div>
                             </td>
                         </tr>
